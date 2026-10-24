@@ -11,7 +11,18 @@ function SubjectCard({ subject }) {
   const bunks = calculateBunks(attended, total);
   const needed = classesToRecover(attended, total);
 
+  function ColorChange({percentage}){
+    if(percentage>=75){
+      return <p className="percentage" style={{color: "green"}} >{percentage}%</p>
+    }
+    else if(percentage>=65 && percentage<75){
+      return <p className="percentage" style={{color: "orange"}} >{percentage}%</p>
+    }
+    else{
+      return <p className="percentage" style={{color: "red"}} >{percentage}%</p>
+    }
 
+  }
   return (
     <article className="card">
       <div className="card-header">
@@ -20,8 +31,8 @@ function SubjectCard({ subject }) {
           🗑️
         </button>
       </div>
-
-      <p className="percentage">{percentage.toFixed(1)}%</p>
+    
+     <ColorChange percentage={percentage.toFixed(1)}/>
       <p className="muted">
         Attended {attended} of {total} classes
       </p>
