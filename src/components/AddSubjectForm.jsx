@@ -4,15 +4,20 @@ import { addSubject } from '../store/subjectsSlice';
 
 function AddSubjectForm() {
   const [name, setName] = useState('');
+  const [error, setError] = useState('');
   const dispatch = useDispatch();
-  console.log("====================================")
-  console.log(name)
-  console.log("====================================")
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!name.trim()) {
+      setError('Subject name is required');
+      return;
+    }
+
     dispatch(addSubject(name));
     setName('');
+    setError('');
   };
 
   return (
@@ -21,8 +26,12 @@ function AddSubjectForm() {
         type="text"
         placeholder="Subject name (e.g. Computer Networks)"
         value={name}
-        onChange={(e) => setName(e.target.value)}
+        onChange={(e) => {
+          setName(e.target.value);
+          setError('');
+        }}
       />
+      {error && <p className="error">{error}</p>}
       <button type="submit">Add subject</button>
     </form>
   );
